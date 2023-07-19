@@ -1,0 +1,53 @@
+{% extends 'shop/layouts/main.html' %}
+
+{% block title %}
+ Register Page
+{% endblock title %}
+{% block content %} 
+<section class="bg-light py-4 my-5">
+    <div class="container">
+        <div class="row">
+        <div class="col-12">
+            <h4 class="mb-3">Cart Item</h3>
+            <hr style="border-color:antiquewhite;">
+        </div>
+        
+        <table class="table table-bordered">
+            <tr>
+                <th>Product Image</th>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Remove</th>
+            </tr>
+            {% for item in cart %}
+            <tr>
+                <td><img src="{{item.product.product_image.url}}" height="75px" alt="{{item.product.name}}"></td>
+                <td>{{item.product.name}}</td>
+                <td>{{item.product_quantity}}</td>
+                <td class="amt">{{item.total_cost}}</td>
+                <td><a href="{% url 'remove_cart' item.id %}" onclick="return confirm('Are you sure? to Remove')" class="btn btn-danger"><i class="fa fa-trash"></i>Remove</a></td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td colspan="1"><b>Total Amount :</b></td>
+                <td id="net">0</td>
+            </tr>
+        </table>
+        </div>
+    </div>
+</section>
+</div>
+<script>
+    const nodes=document.querySelectorAll(".amt");
+    const arr=Array.from(nodes);
+    const res=arr.reduce((acc,curr)=>{
+        return acc+=Number(curr.textContent)
+    },0);
+    document.getElementById("net").innerHTML="Rs "+res
+</script>
+{% endblock content %}
+
+
